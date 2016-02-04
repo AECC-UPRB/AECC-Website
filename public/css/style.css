@@ -1,0 +1,40 @@
+.container{
+	display:table;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left: 0;
+}
+
+.nav{
+	width:256px;
+	height:100%;
+	background-color: #d9d9d9;
+}
+
+.column{
+	display: table-cell;
+	padding: 10px;
+}
+
+.nav-item{
+	text-decoration: none;
+	display: block;
+	margin: 5px auto;
+	padding: 10px;
+	text-align: center;
+}
+
+.nav-btn{
+	background-color: #3366cc;
+	color:white;
+	transition:.5s;
+}
+
+.nav-btn:hover{
+	background-color: #6699ff;
+	color:black;
+	transition:.5s;
+}
