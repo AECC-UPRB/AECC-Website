@@ -35,5 +35,6 @@
 
 .nav-btn:hover{
 	background-color: #6699ff;
+	text-decoration: none;
 	transition:.1s;
 }
