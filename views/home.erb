@@ -1,6 +1,43 @@
+<link rel="stylesheet" type="text/css" href="/css/event.css">
 <h1>
 	Welcome!
 </h1>
 <p>
 	The purpose of this website is to be used as a guide for the AECC website project. This is merely a demo and is not meant to be taken seriously.
 </p>
+
+
+<%# THIS IS AN EXPERIMENTAL CATASTROPHE, OBSERVE AT OWN RISK%>
+<div class="event-container">
+	<%
+	require 'pg'
+
+	begin
+		con = PG.connect :dbname => 'aeccdb', :user => 'juanjalvarez', :password => '2016'
+
+		result = con.exec "SELECT * FROM Events"
+
+		result.each do |row|
+			@eventname = row['eventname']
+			@eventdesc = row['eventdesc']
+			@eventdate = row['eventdate']
+			@occupancy = row['occupancy']
+			%>
+
+		<div class="event">
+			<h3><%=@eventname%></h2>
+			<p><%=@eventdesc%></p>
+			<h6>Date: <%=@eventdate%></h4>
+			<h6>Occupancy: <%=@occupancy%></h4>
+		</div>
+
+		<%
+		end
+
+	rescue PG::Error => e
+		puts e.message
+	ensure
+		con.close if con
+	end
+	%>
+</div>
