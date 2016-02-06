@@ -1,6 +1,65 @@
+<link rel="stylesheet" type="text/css" href="/css/event.css">
 <h1>
 	Welcome!
 </h1>
 <p>
 	The purpose of this website is to be used as a guide for the AECC website project. This is merely a demo and is not meant to be taken seriously.
 </p>
+
+
+<%# THIS IS AN EXPERIMENTAL CATASTROPHE, OBSERVE AT OWN RISK%>
+<div class="event-container">
+	<%
+	require 'pg'
+
+	begin
+		con = PG.connect :dbname => 'aeccdb', :user => 'juanjalvarez', :password => '2016'
+
+		result = con.exec "SELECT * FROM Events"
+
+		result.each do |row|
+			@modalid = "modal" + row['eventid']
+			@eventname = row['eventname']
+			@eventdesc = row['eventdesc']
+			@eventdate = row['eventdate']
+			@occupancy = row['occupancy']
+			%>
+
+		<div id=<%='"' + @modalid + '"'%> class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h2 class="modal-title"><%=@eventname%></h2>
+					</div>
+					<div class="modal-body">
+						<h3>Description</h3>
+						<p>
+							<%=@eventdesc%>
+						</p>
+						<br>
+						<h5>Date: <%=@eventdate%></h5>
+						<h5>Occupancy: <%=@occupancy%></h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="event">
+			<a href=<%='"#' + @modalid + '"'%> role="button" class="event-btn" data-toggle="modal"><h3><%=@eventname%></h3></a>
+			<h6>Date: <%=@eventdate%></h6>
+		</div>
+
+		<%
+		end
+
+	rescue PG::Error => e
+		puts e.message
+	ensure
+		con.close if con
+	end
+	%>
+</div>

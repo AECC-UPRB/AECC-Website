@@ -30,11 +30,11 @@
 .nav-btn{
 	background-color: #3366cc;
 	color:white;
-	transition:.5s;
+	transition:.1s;
 }
 
 .nav-btn:hover{
 	background-color: #6699ff;
-	color:black;
-	transition:.5s;
+	text-decoration: none;
+	transition:.1s;
 }
