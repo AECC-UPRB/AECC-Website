@@ -11,12 +11,16 @@ begin
 			load 'db_create.rb'
 		elsif input == "insert" then
 			load 'db_insert.rb'
-		elsif input == "destroyall" then
+		elsif input == "destroy" then
 			load 'db_destroy.rb'
-		elsif input == "dropall" then
+		elsif input == "drop" then
 			load 'db_drop.rb'
-		elsif input == "viewall" then
+		elsif input == "view" then
 			load 'db_view.rb'
+		elsif input == "refresh" then
+			load 'db_drop.rb'
+			load 'db_create.rb'
+			load 'db_insert.rb'
 		elsif input == "exec" then
 			puts "Query:"
 			code = gets.chomp

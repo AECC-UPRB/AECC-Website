@@ -1,0 +1,13 @@
+.team-container{
+	text-align: center;
+}
+
+.role-container{
+	display:inline-block;
+}
+
+.staffmember{
+	display:inline;
+	float:left;
+	width:150px;
+}

@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="/css/about.css">
 <h1>
 	Who we are
 </h1>
@@ -7,3 +8,65 @@
 <h1>
 	The team
 </h1>
+<br>
+<div class="team-container">
+	<%
+		require 'pg'
+
+		begin
+			con = PG.connect :dbname => 'aeccdb', :user => 'juanjalvarez', :password => '2016'
+
+			result = con.exec("SELECT * FROM roles ORDER BY role_weight DESC")
+			roles = Array.new
+			staffroles = Hash.new
+			result.each do |row|
+				roles.push row
+				staffroles[row['role_id']] = Array.new
+			end
+
+			result = con.exec("SELECT * FROM staff")
+			staff = Hash.new
+			result.each do |row|
+				staff[row['staff_id']] = row
+			end
+
+			result = con.exec("SELECT * FROM staffroles")
+			result.each do |row|
+				staffroles[row['fk2_role_id']].push staff[row['fk1_staff_id']]
+			end
+
+			roles.each do |role|
+				@rolename = role['role_name']
+				%>
+					<div class="role-container">
+						<h3><%=@rolename%></h3>
+					<%
+						staffroles[role['role_id']].each do |s|
+							%>
+								<div class="staffmember">
+									<%
+										@imgurl = "\"#{s['staff_image']}\""
+									%>
+									<img src=<%=@imgurl%> width="96" height="96">
+									<h4>
+										<%=s['staff_name']%>
+									</h4>
+									<p>
+										<%=s['staff_about']%>
+									</p>
+								</div>
+							<%
+						end
+					%>
+					</div>
+					<br>
+				<%
+			end
+
+		rescue PG::Error => e
+			puts e.message
+		ensure
+			con.close if con
+		end
+	%>
+</div>

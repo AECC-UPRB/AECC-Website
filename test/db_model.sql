@@ -16,7 +16,7 @@ CREATE TABLE eventreviews(
 CREATE TABLE staff(
 	staff_id SERIAL PRIMARY KEY,
 	staff_name VARCHAR(30) NOT NULL,
-	staff_image VARCHAR(50) DEFAULT '/staff/default.png',
+	staff_image VARCHAR(50) DEFAULT '/staff/default.jpg',
 	staff_about VARCHAR(250) NOT NULL,
 	staff_email VARCHAR(50) NOT NULL
 )
