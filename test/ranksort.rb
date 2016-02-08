@@ -1,52 +1,39 @@
-class Member
+require 'pg'
 
-	def initialize(name_str, rank_str)
-		@name = name_str
-		@rank = rank_str
+begin
+	con = PG.connect :dbname => 'aeccdb', :user => 'juanjalvarez', :password => '2016'
+
+	result = con.exec("SELECT * FROM roles ORDER BY role_weight DESC")
+	roles = Array.new
+	staffroles = Hash.new
+	result.each do |row|
+		roles.push row
+		staffroles[row['role_id']] = Array.new
 	end
 
-	def getName
-		return @name
+	result = con.exec("SELECT * FROM staff")
+	staff = Hash.new
+	result.each do |row|
+		staff[row['staff_id']] = row
 	end
 
-	def getRank
-		return @rank
+	result = con.exec("SELECT * FROM staffroles")
+	result.each do |row|
+		staffroles[row['fk2_role_id']].push staff[row['fk1_staff_id']]
 	end
+
+	roles.each do |role|
+		puts "=" * role['role_name'].length
+		puts role['role_name']
+		puts "=" * role['role_name'].length
+		staffroles[role['role_id']].each do |s|
+			puts s['staff_name']
+		end
+		puts ""
+	end
+
+rescue PG::Error => e
+	puts e.message
+ensure
+	con.close if con
 end
-
-member = Array.new
-rank = Array.new
-map = Hash.new
-member.push(Member.new('Juan J. Alvarez', 'Vowel'))
-member.push(Member.new('Yadiel', 'President'))
-member.push(Member.new('Carlos', 'Vice-President'))
-member.push(Member.new('Marie', 'Financial manager'))
-member.push(Member.new('Ramon', 'Financial manager'))
-member.push(Member.new('Andres', 'Secretary'))
-member.push(Member.new('Juan Carlos', 'Vowel'))
-member.push(Member.new('Juan Rivera', 'Vowel'))
-member.push(Member.new('Milton', 'Vowel'))
-member.push(Member.new('Luis', 'Vowel'))
-
-member.each do |m|
-	unless rank.include? m.getRank
-		rank.push m.getRank unless rank.include? m.getRank
-		map[m.getRank] = Array.new
-	end
-	map[m.getRank].push m
-end
-
-rank.each do |r|
-
-end
-
-rank.each do |r|
-	puts r
-	puts "-" * r.length
-	map[r].each do |m|
-		puts m.getName
-	end
-	puts "\n\n"
-end
-
-#TODO: sort ranks by number of members in ascending order
