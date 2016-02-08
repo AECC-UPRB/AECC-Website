@@ -15,14 +15,13 @@
 	begin
 		con = PG.connect :dbname => 'aeccdb', :user => 'juanjalvarez', :password => '2016'
 
-		result = con.exec "SELECT * FROM Events"
+		result = con.exec "SELECT * FROM events"
 
 		result.each do |row|
-			@modalid = "modal" + row['eventid']
-			@eventname = row['eventname']
-			@eventdesc = row['eventdesc']
-			@eventdate = row['eventdate']
-			@occupancy = row['occupancy']
+			@modalid = "modal" + row['event_id']
+			@eventname = row['event_name']
+			@eventdesc = row['event_desc']
+			@eventdate = row['event_date']
 			%>
 
 		<div id=<%='"' + @modalid + '"'%> class="modal fade" role="dialog">
@@ -39,7 +38,6 @@
 						</p>
 						<br>
 						<h5>Date: <%=@eventdate%></h5>
-						<h5>Occupancy: <%=@occupancy%></h5>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
