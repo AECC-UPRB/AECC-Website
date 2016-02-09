@@ -1,13 +1,24 @@
-.team-container{
+.body{
 	text-align: center;
 }
 
 .role-container{
 	display:inline-block;
+	padding:15px;
+	margin:5px;
 }
 
-.staffmember{
+.staff{
 	display:inline;
 	float:left;
-	width:150px;
+	width:225px;
+	height:225px;
+	word-wrap:break-word;
+	margin:10px;
+}
+
+.staff-image{
+	width:128px;
+	height:128px;
+	border-radius: 50%;
 }

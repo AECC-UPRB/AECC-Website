@@ -8,7 +8,6 @@
 <h1>
 	The team
 </h1>
-<br>
 <div class="team-container">
 	<%
 		require 'pg'
@@ -39,30 +38,30 @@
 				@rolename = role['role_name']
 				%>
 					<div class="role-container">
-						<h3><%=@rolename%></h3>
-					<%
-						staffroles[role['role_id']].each do |s|
-							%>
-								<div class="staffmember">
-									<%
-										@imgurl = "\"#{s['staff_image']}\""
-									%>
-									<img src=<%=@imgurl%> width="96" height="96">
-									<h4>
-										<%=s['staff_name']%>
-									</h4>
-									<p>
-										<%=s['staff_about']%>
-									</p>
-								</div>
-							<%
-						end
-					%>
+						<h3>
+							<%=@rolename%>
+						</h3>
+						<%
+							staffroles[role['role_id']].each do |s|
+								%>
+									<div class="staff">
+										<%
+											@imgurl = "\"#{s['staff_image']}\""
+										%>
+										<img src=<%=@imgurl%> class="staff-image">
+										<h4 class="staff-name">
+											<%=s['staff_name']%>
+										</h4>
+										<p class="staff-about">
+											<%=s['staff_about']%>
+										</p>
+									</div>
+								<%
+							end
+						%>
 					</div>
-					<br>
 				<%
 			end
-
 		rescue PG::Error => e
 			puts e.message
 		ensure

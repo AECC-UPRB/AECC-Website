@@ -12,6 +12,7 @@
 	width:256px;
 	height:100%;
 	background-color: #d9d9d9;
+	text-align: center;
 }
 
 .column{
@@ -36,5 +37,6 @@
 .nav-btn:hover{
 	background-color: #6699ff;
 	text-decoration: none;
+	color:white;
 	transition:.1s;
 }
